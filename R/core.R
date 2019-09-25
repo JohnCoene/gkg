@@ -29,6 +29,9 @@ gkg <- function(q, limit = 1L, languages = NULL, types = NULL,
   assert_that(not_missing(q))
   assert_that(has_key(key))
 
+  types <- process_input(types, "types")
+  languages <- process_input(types, "languages")
+
   # prepare call
   uri <- parse_url(BASE_URL)
   uri$path <- BASE_PATH
@@ -36,12 +39,12 @@ gkg <- function(q, limit = 1L, languages = NULL, types = NULL,
     query = q,
     limit = limit,
     indent = FALSE,
-    languages = languages,
-    types = types,
     prefix = prefix,
     key = key
   )
   uri <- build_url(uri)
+  uri <- paste0(uri, types)
+  uri <- paste0(uri, languages)
 
   # call and extract content
   response <- GET(uri)
@@ -73,6 +76,16 @@ clean_names <- function(nms){
     gsub("\\.$", "", .) %>% 
     gsub("[[:punct:]]", "_", .) %>% 
     tolower()
+}
+
+process_input <- function(x, what){
+  if(is.null(x))
+    return(NULL)
+
+  what <- paste0("&", what, "=")
+  
+  paste0(x, collapse = what) %>% 
+    paste0(what, .)
 }
 
 globalVariables(".")
