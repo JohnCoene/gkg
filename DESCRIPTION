@@ -1,0 +1,18 @@
+Package: gkg
+Title: Google Knowledge Graph
+Version: 0.0.1.9000
+Authors@R: 
+    person(given = "John",
+           family = "Coene",
+           role = c("aut", "cre"),
+           email = "jcoenep@gmail.com")
+Description: Google 'Knowledge Graph'.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    httr,
+    purrr,
+    crayon,
+    assertthat
+RoxygenNote: 6.1.1
