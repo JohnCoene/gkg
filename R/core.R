@@ -30,7 +30,7 @@ gkg <- function(q, limit = 1L, languages = NULL, types = NULL,
   assert_that(has_key(key))
 
   types <- process_input(types, "types")
-  languages <- process_input(types, "languages")
+  languages <- process_input(languages, "languages")
 
   # prepare call
   uri <- parse_url(BASE_URL)
@@ -50,6 +50,9 @@ gkg <- function(q, limit = 1L, languages = NULL, types = NULL,
   response <- GET(uri)
   warn_for_status(response)
   content <- content(response)
+
+  if(!length(content$itemListElement))
+    return(data.frame())
   
   quiet_dfr <- quietly(map_dfr)
 
